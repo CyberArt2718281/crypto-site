@@ -1,0 +1,20 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  background-color: rgb(7, 0, 21);
+  color: white;
+  line-height: 1.5;
+}
+
+a {
+  color: rgb(98, 36, 223);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: white;
+}

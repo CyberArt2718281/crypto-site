@@ -1,0 +1,36 @@
+.notification {
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9em;
+  padding: 8px 12px;
+  background: rgba(98, 36, 223, 0.2);
+  border-radius: 6px;
+  align-self: center;
+  max-width: 80%;
+  text-align: center;
+  border-left: 3px solid rgb(98, 36, 223);
+}
+
+.userMsg {
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(98, 36, 223, 0.2);
+  max-width: 80%;
+  align-self: flex-start;
+  border-left: 3px solid rgb(98, 36, 223);
+}
+
+.userMsg b {
+  color: rgb(98, 36, 223);
+}
+
+.userMsg small {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8em;
+}
+
+.userMsg div:last-child {
+  margin-top: 6px;
+  padding-left: 0;
+  color: rgba(255, 255, 255, 0.9);
+}

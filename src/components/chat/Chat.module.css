@@ -1,0 +1,118 @@
+.chatContainer {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.chatIcon {
+  width: 50px;
+  height: 50px;
+  background-color: rgb(98, 36, 223);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.chatIcon:hover {
+  transform: scale(1.1);
+  background-color: rgba(98, 36, 223, 0.9);
+}
+
+.chatIcon svg {
+  width: 24px;
+  height: 24px;
+  fill: white;
+}
+
+.chat {
+  background: rgb(7, 0, 21);
+  border: 1px solid rgba(98, 36, 223, 0.3);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  width: 350px;
+  overflow: hidden;
+  color: white;
+  transform: translateY(20px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.chat.open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.chat h3 {
+  padding: 16px;
+  margin: 0;
+  background: rgb(98, 36, 223);
+  color: white;
+  text-align: center;
+}
+
+.history {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.input {
+  display: flex;
+  padding: 12px;
+  background: rgba(7, 0, 21, 0.8);
+  border-top: 1px solid rgba(98, 36, 223, 0.3);
+}
+
+.input input {
+  flex: 1;
+  padding: 10px 16px;
+  border: 1px solid rgba(98, 36, 223, 0.5);
+  border-radius: 6px;
+  margin-right: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.input input:focus {
+  outline: none;
+  border-color: rgb(98, 36, 223);
+  box-shadow: 0 0 0 2px rgba(98, 36, 223, 0.3);
+}
+
+.input button {
+  padding: 10px 20px;
+  background: rgb(98, 36, 223);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.input button:hover {
+  background: rgba(98, 36, 223, 0.8);
+}
+
+.input button:disabled {
+  background: rgba(255, 255, 255, 0.2);
+  cursor: not-allowed;
+}

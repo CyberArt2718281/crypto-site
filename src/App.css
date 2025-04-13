@@ -1,0 +1,12 @@
+#root {
+  max-width: 1680px;
+  margin: 0 auto;
+  padding: 1rem;
+  text-align: center;
+
+  grid-template-columns: 1fr;
+  @media (width >= 1111px){
+    grid-template-columns: 2fr 1fr;
+  }
+  gap: 1rem;
+}

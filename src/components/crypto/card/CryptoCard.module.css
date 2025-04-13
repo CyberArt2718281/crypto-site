@@ -1,0 +1,242 @@
+/* Основные стили карточки */
+.card {
+  --card-accent: rgba(108, 46, 233, 0.6);
+  --card-bg: linear-gradient(145deg, rgba(18, 10, 45, 0.96) 0%, rgba(10, 3, 32, 0.98) 100%);
+  --card-border: 1px solid rgba(108, 46, 233, 0.35);
+
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 28px;
+  border: var(--card-border);
+  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  color: white;
+  box-shadow:
+          0 8px 16px -4px rgba(0, 0, 0, 0.25),
+          0 4px 8px -2px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(12px);
+  overflow: hidden;
+  z-index: 1;
+  will-change: transform, box-shadow;
+}
+
+/* Эффект свечения при наведении */
+.card::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  right: -100%;
+  bottom: -100%;
+  background: radial-gradient(
+          400px circle at var(--mouse-x) var(--mouse-y),
+          rgba(108, 46, 233, 0.25) 0%,
+          transparent 80%
+  );
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  z-index: -1;
+}
+
+/* Внутренний свечение */
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 19px;
+  background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.04) 0%,
+          rgba(255, 255, 255, 0.02) 100%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Эффекты при наведении */
+.card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow:
+          0 18px 36px -6px var(--card-accent),
+          0 12px 24px -4px rgba(0, 0, 0, 0.25);
+  border-color: rgba(108, 46, 233, 0.7);
+}
+
+.card:hover::before {
+  opacity: 1;
+  transform: translate(calc(var(--mouse-x) * 0.05px), calc(var(--mouse-y) * 0.05px));
+}
+
+/* Варианты карточек */
+.card.darker {
+  --card-bg: linear-gradient(145deg, rgba(10, 3, 32, 0.98) 0%, rgba(6, 1, 22, 0.99) 100%);
+}
+
+.card.lighter {
+  --card-bg: linear-gradient(145deg, rgba(22, 12, 55, 0.95) 0%, rgba(18, 10, 45, 0.98) 100%);
+}
+
+/* Содержимое карточки */
+.card-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Заголовок и иконка */
+.card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.card img {
+  width: 52px;
+  height: 52px;
+  margin-right: 18px;
+  border-radius: 50%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card:hover img {
+  transform: scale(1.15) rotate(8deg);
+  filter: drop-shadow(0 6px 12px rgba(108, 46, 233, 0.5));
+}
+
+.card h3 {
+  font-size: 1.35rem;
+  color: rgba(255, 255, 255, 0.98);
+  font-weight: 650;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+  margin: 0;
+}
+
+.card:hover h3 {
+  color: rgba(188, 158, 255, 0.95);
+  text-shadow: 0 0 12px rgba(188, 158, 255, 0.3);
+}
+
+.card small {
+  display: block;
+  margin-bottom: 22px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}
+
+/* Детали карточки */
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.details-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 1.8;
+}
+
+.details-label {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+/* Стили цен */
+.price-up {
+  color: #2ecc71;
+  font-weight: 650;
+  text-shadow: 0 0 12px rgba(46, 204, 113, 0.4);
+  transition: all 0.3s ease;
+}
+
+.price-down {
+  color: #ff6b6b;
+  font-weight: 650;
+  text-shadow: 0 0 12px rgba(255, 107, 107, 0.3);
+  transition: all 0.3s ease;
+}
+
+.card:hover .price-up {
+  text-shadow: 0 0 16px rgba(46, 204, 113, 0.6);
+}
+
+.card:hover .price-down {
+  text-shadow: 0 0 16px rgba(255, 107, 107, 0.5);
+}
+
+/* Анимации цен */
+@keyframes priceRise {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  50% { transform: translateY(-6px) scale(1.05); opacity: 0.9; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@keyframes priceFall {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  50% { transform: translateY(6px) scale(1.05); opacity: 0.9; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.price-up.change-animation {
+  animation: priceRise 1s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.price-down.change-animation {
+  animation: priceFall 1s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Контейнер для параллакс-эффекта */
+.card-container {
+  position: relative;
+  transition: transform 0.4s ease-out;
+  perspective: 1000px;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+  .card {
+    padding: 24px;
+    border-radius: 18px;
+    max-width: 100%;
+  }
+
+  .card img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .card h3 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .card-header {
+    margin-bottom: 14px;
+  }
+
+  .card img {
+    width: 44px;
+    height: 44px;
+    margin-right: 16px;
+  }
+
+  .details {
+    gap: 16px;
+    padding-top: 16px;
+  }
+}
