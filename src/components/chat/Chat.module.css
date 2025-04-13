@@ -27,6 +27,11 @@
   background-color: rgba(98, 36, 223, 0.9);
 }
 
+.chatIcon.active {
+  background-color: rgba(98, 36, 223, 0.7);
+  transform: scale(0.9);
+}
+
 .chatIcon svg {
   width: 24px;
   height: 24px;
@@ -46,7 +51,10 @@
   opacity: 0;
   display: none;
   visibility: hidden;
-  transition: all 0.3s ease;
+  transition:
+          opacity 0.3s ease,
+          transform 0.3s ease,
+          visibility 0s linear 0.3s;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
@@ -55,6 +63,14 @@
   opacity: 1;
   display: flex;
   visibility: visible;
+  transition:
+          opacity 0.3s ease,
+          transform 0.3s ease,
+          visibility 0s linear 0s;
+}
+
+.chat.closing {
+  animation: fadeOut 0.3s ease forwards;
 }
 
 .chat h3 {
@@ -74,14 +90,15 @@
   flex-direction: column;
   gap: 12px;
   background: rgba(0, 0, 0, 0.2);
+  scroll-behavior: smooth;
 }
 
 .input {
   display: flex;
   padding: 12px;
   background: rgba(7, 0, 21, 0.8);
-  animation: fadeIn 0.4s ease-out;
   border-top: 1px solid rgba(98, 36, 223, 0.3);
+  animation: fadeIn 0.4s ease-out;
 }
 
 .input input {
@@ -108,7 +125,7 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .input button:hover {
@@ -120,20 +137,50 @@
   cursor: not-allowed;
 }
 
-/* Адаптация для планшетов (768px и меньше) */
-@media (max-width: 768px) {
-  .chat {
-    width: 320px;
-    height: 450px;
-  }
+/* Анимации */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
 
-  .chatContainer {
-    bottom: 15px;
-    right: 15px;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
   }
 }
 
-/* Адаптация для мобильных (480px и меньше) */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-60px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Адаптация для мобильных */
 @media (max-width: 480px) {
   .chatContainer {
     width: calc(100% - 40px);
@@ -144,6 +191,7 @@
 
   .chat {
     height: 70vh;
+    width: 300px;
     max-height: 500px;
     border-radius: 12px 12px 0 0;
     transform: translateY(0);
@@ -171,12 +219,7 @@
 }
 
 /* Ландшафтная ориентация на мобильных */
-@media (max-height: 480px) and (orientation: landscape) {
-  .chat {
-    height: 80vh;
-    max-height: 300px;
-  }
-}
+
 
 /* Специальные стили для очень маленьких экранов */
 @media (max-width: 360px) {
@@ -194,28 +237,5 @@
 
   .input button {
     padding: 8px 16px;
-  }
-}
-
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }

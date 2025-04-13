@@ -15,6 +15,9 @@ export default function Chat() {
   const [inputText, setInputText] = useState<string>('');
   const [nickname, setNickname] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isClosing, setIsClosing] = useState<boolean>(false);
+  const chatRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const chat = io('wss://potato.ipv6b.my.id:2096', {
@@ -29,7 +32,13 @@ export default function Chat() {
     chat.on('disconnect', () => {
       setSocket(null);
       console.log('disconnected from chat');
-      setMessages((prev) => [...prev, {type: 'system', data: {text: 'You were disconnected from chat!', timestamp: (new Date()).toISOString()}}])
+      setMessages((prev) => [...prev, {
+        type: 'system',
+        data: {
+          text: 'You were disconnected from chat!',
+          timestamp: (new Date()).toISOString()
+        }
+      }]);
     });
 
     chat.on('system', (systemMsg: SystemMessageType) => {
@@ -53,7 +62,7 @@ export default function Chat() {
       if (!nn) return;
       setNickname(nn);
       socket.emit('set_username', { username: nn });
-      setInputText(''); // Очищаем поле ввода после установки имени
+      setInputText('');
     } else {
       if (!nickname) {
         alert('Set nickname first!\n\nUse `/name` command in chat, e.g.:\n\n/name RandomNameLol');
@@ -66,9 +75,16 @@ export default function Chat() {
   }, [socket, inputText, nickname]);
 
   const toggleChat = () => {
-    setIsOpen(!isOpen);
+    if (isOpen) {
+      setIsClosing(true);
+      setTimeout(() => {
+        setIsOpen(false);
+        setIsClosing(false);
+      }, 300);
+    } else {
+      setIsOpen(true);
+    }
   };
-  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
@@ -79,7 +95,7 @@ export default function Chat() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
-        setIsOpen(false);
+        toggleChat();
       }
     };
 
@@ -87,13 +103,22 @@ export default function Chat() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen]);
 
+  useEffect(() => {
+    if (chatRef.current && messages.length) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   return (
       <div className={style.chatContainer}>
-        <div className={`${style.chat} ${isOpen ? style.open : ''}`}>
+        <div
+            className={`${style.chat} ${isOpen ? style.open : ''} ${isClosing ? style.closing : ''}`}
+            ref={chatRef}
+        >
           <h3>Chat section</h3>
           <div className={style.history}>
             {messages.map((msg, i) => (
-                <Message key={'chat-message-no-' + i} type={msg.type} data={msg.data} />
+                <Message key={`chat-message-${i}`} type={msg.type} data={msg.data} />
             ))}
           </div>
           <div className={style.input}>
@@ -105,10 +130,15 @@ export default function Chat() {
                 placeholder="Type your message..."
                 onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
             />
-            <button onClick={sendMessage} disabled={!inputText.trim()}>Send</button>
+            <button onClick={sendMessage} disabled={!inputText.trim()}>
+              Send
+            </button>
           </div>
         </div>
-        <div className={style.chatIcon} onClick={toggleChat}>
+        <div
+            className={`${style.chatIcon} ${isOpen ? style.active : ''}`}
+            onClick={toggleChat}
+        >
           <ChatIconSVG />
         </div>
       </div>
