@@ -194,20 +194,10 @@
     width: 300px;
     max-height: 500px;
     border-radius: 12px 12px 0 0;
-    transform: translateY(0);
   }
 
-  .chat.open {
-    transform: translateY(-60px);
-  }
 
-  .chatIcon {
-    width: 45px;
-    height: 45px;
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-  }
+
 
   .input {
     padding: 10px;
