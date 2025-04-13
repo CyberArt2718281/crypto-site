@@ -3,15 +3,13 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: false,
     port: 3000,
     open: true,
-    proxy: {},
   },
+  base: './',
   build: {
-    outDir: './build',
+    outDir: './dist',
     sourcemap: true,
-    // sourcemap: false
   },
   css: {
     modules: {
@@ -20,7 +18,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': '/src',
+      '@': './src',
     },
   },
 });
