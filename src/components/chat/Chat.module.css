@@ -37,7 +37,6 @@
   background: rgb(7, 0, 21);
   border: 1px solid rgba(98, 36, 223, 0.3);
   border-radius: 12px;
-  display: flex;
   flex-direction: column;
   height: 500px;
   width: 350px;
@@ -45,6 +44,7 @@
   color: white;
   transform: translateY(20px);
   opacity: 0;
+  display: none;
   visibility: hidden;
   transition: all 0.3s ease;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
@@ -53,6 +53,7 @@
 .chat.open {
   transform: translateY(0);
   opacity: 1;
+  display: flex;
   visibility: visible;
 }
 
