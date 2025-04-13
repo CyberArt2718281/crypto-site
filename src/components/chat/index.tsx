@@ -1,9 +1,8 @@
-import { useCallback, useEffect, useState, useRef} from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import style from './Chat.module.css';
 import { ChatMessage, Message, MessageType, SystemMessageType } from './message';
-import { io, Socket } from 'socket.io-client';
+import io from 'socket.io-client';
 
-// Иконка чата в SVG (можно заменить на свою)
 const ChatIconSVG = () => (
     <svg viewBox="0 0 24 24">
       <path d="M12 3C6.486 3 2 6.364 2 10.5c0 2.742 1.982 5.354 5 6.678V21l4.5-2.5c.836.227 1.735.353 2.7.353 5.514 0 10-3.364 10-7.5S17.514 3 12 3zm1 11h-2v-2h2v2zm0-4h-2V6h2v4z"/>
@@ -11,7 +10,7 @@ const ChatIconSVG = () => (
 );
 
 export default function Chat() {
-  const [socket, setSocket] = useState<Socket | null>(null);
+  const [socket, setSocket] = useState<ReturnType<typeof io> | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputText, setInputText] = useState<string>('');
   const [nickname, setNickname] = useState<string>('');
@@ -48,11 +47,13 @@ export default function Chat() {
 
   const sendMessage = useCallback(async () => {
     if (!socket || !inputText.trim()) return;
+
     if (inputText.startsWith('/name ')) {
       const nn = inputText.substring('/name '.length).trim();
       if (!nn) return;
       setNickname(nn);
       socket.emit('set_username', { username: nn });
+      setInputText(''); // Очищаем поле ввода после установки имени
     } else {
       if (!nickname) {
         alert('Set nickname first!\n\nUse `/name` command in chat, e.g.:\n\n/name RandomNameLol');
