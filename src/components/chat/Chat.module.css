@@ -63,6 +63,7 @@
   background: rgb(98, 36, 223);
   color: white;
   text-align: center;
+  animation: fadeIn 0.3s ease-out 0.1s backwards;
 }
 
 .history {
@@ -79,6 +80,7 @@
   display: flex;
   padding: 12px;
   background: rgba(7, 0, 21, 0.8);
+  animation: fadeIn 0.4s ease-out;
   border-top: 1px solid rgba(98, 36, 223, 0.3);
 }
 
@@ -116,4 +118,104 @@
 .input button:disabled {
   background: rgba(255, 255, 255, 0.2);
   cursor: not-allowed;
+}
+
+/* Адаптация для планшетов (768px и меньше) */
+@media (max-width: 768px) {
+  .chat {
+    width: 320px;
+    height: 450px;
+  }
+
+  .chatContainer {
+    bottom: 15px;
+    right: 15px;
+  }
+}
+
+/* Адаптация для мобильных (480px и меньше) */
+@media (max-width: 480px) {
+  .chatContainer {
+    width: calc(100% - 40px);
+    max-width: 100%;
+    right: 20px;
+    bottom: 10px;
+  }
+
+  .chat {
+    height: 70vh;
+    max-height: 500px;
+    border-radius: 12px 12px 0 0;
+    transform: translateY(0);
+  }
+
+  .chat.open {
+    transform: translateY(-60px);
+  }
+
+  .chatIcon {
+    width: 45px;
+    height: 45px;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+  }
+
+  .input {
+    padding: 10px;
+  }
+
+  .input input {
+    padding: 8px 12px;
+  }
+}
+
+/* Ландшафтная ориентация на мобильных */
+@media (max-height: 480px) and (orientation: landscape) {
+  .chat {
+    height: 80vh;
+    max-height: 300px;
+  }
+}
+
+/* Специальные стили для очень маленьких экранов */
+@media (max-width: 360px) {
+  .chat{
+    width: 250px;
+  }
+  .chat h3 {
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  .history {
+    padding: 12px;
+  }
+
+  .input button {
+    padding: 8px 16px;
+  }
+}
+
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
